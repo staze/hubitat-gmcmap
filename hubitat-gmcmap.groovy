@@ -38,7 +38,7 @@ def getParams = [
 	contentType: "application/json",
 ]
 
-def poll() {
+def refresh() {
 	try {
 		httpget(getParams) { resp -> log.debug resp.json }
 	} catch(Exception e) {
