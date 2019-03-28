@@ -1,8 +1,5 @@
 /*
- * Http GET Switch
- *
- * Calls URIs with HTTP GET for switch on or off
- * 
+ * gmcmap.com Geiger Counter Query
  */
 metadata {
     definition(name: "gmcmap.com Geiger Counter", namespace: "staze", author: "Ryan Stasel", importUrl: "https://raw.githubusercontent.com/hubitat/HubitatPublic/master/examples/drivers/httpGetSwitch.groovy") {
@@ -33,34 +30,15 @@ def parse(String description) {
     if (logEnable) log.debug(description)
 }
 
-def on() {
-    if (logEnable) log.debug "Sending on GET request to [${settings.onURI}]"
+def getParams = [
+    uri: "http://www.gmcmap.com/historyData-plain.asp?Param_ID={GeigerID}&timezone={Timezone}",
+        	contentType: "application/json",
+]
 
-    try {
-        httpGet(settings.onURI) { resp ->
-            if (resp.success) {
-                sendEvent(name: "switch", value: "on", isStateChange: true)
-            }
-            if (logEnable)
-                if (resp.data) log.debug "${resp.data}"
-        }
-    } catch (Exception e) {
-        log.warn "Call to on failed: ${e.message}"
-    }
-}
-
-def off() {
-    if (logEnable) log.debug "Sending off GET request to [${settings.offURI}]"
-
-    try {
-        httpGet(settings.offURI) { resp ->
-            if (resp.success) {
-                sendEvent(name: "switch", value: "off", isStateChange: true)
-            }
-            if (logEnable)
-                if (resp.data) log.debug "${resp.data}"
-        }
-    } catch (Exception e) {
-        log.warn "Call to off failed: ${e.message}"
-    }
+def poll() {
+	try {
+		httpget(getParams) { resp -> log.debug resp.json }
+	} catch(Exception e) {
+		log.debug "error occured calling httpPost ${e}"
+	}
 }
