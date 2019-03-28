@@ -41,7 +41,7 @@ def getParams = [
 
 def refresh() {
 	try {
-		httpget(getParams) { resp -> log.debug resp.json }
+		httpGet(getParams) { resp -> log.debug resp.json }
 	} catch(Exception e) {
 		log.debug "error occured calling httpget ${e}"
 	}
