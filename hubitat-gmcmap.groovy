@@ -45,4 +45,5 @@ def refresh() {
 	} catch(Exception e) {
 		log.debug "error occured calling httpget ${e}"
 	}
+	if (logEnable) log.info resp.body
 }
