@@ -7,6 +7,7 @@ import groovy.json.JsonOutput
 metadata {
     definition(name: "gmcmap.com Geiger Counter", namespace: "staze", author: "Ryan Stasel", importUrl: "https://raw.githubusercontent.com/hubitat/HubitatPublic/master/examples/drivers/httpGetSwitch.groovy") {
         capability "Sensor"
+	capability "Refresh"
     }
 }
 
