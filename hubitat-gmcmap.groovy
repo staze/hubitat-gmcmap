@@ -35,7 +35,7 @@ def parse(String description) {
 }
 
 def getParams = [
-	uri: "http://www.gmcmap.com/historyData-plain.asp?Param_ID={GeigerID}&timezone={Timezone}",
+	uri: "http://www.gmcmap.com/historyData-plain.asp?Param_ID=${GeigerID}&timezone=${Timezone}",
 	contentType: "application/json",
 ]
 
