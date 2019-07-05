@@ -34,16 +34,21 @@ def parse(String description) {
     if (logEnable) log.debug(description)
 }
 
-def getParams = [
-	uri: "http://www.gmcmap.com/historyData-plain.asp?Param_ID=${GeigerID}&timezone=${Timezone}",
-	requestContentType: "application/json",
-]
+def getParams() { "http://www.gmcmap.com/historyData-plain.asp?Param_ID=${GeigerID}&timezone=${Timezone}" }
 
 def refresh() {
-	try {
-		httpGet(getParams) { resp -> log.debug resp.json }
-	} catch(Exception e) {
-		log.debug "error occured calling httpget ${e}"
+def responseBody
+
+try {
+	if (logEnable) log.debug "Params:  ${getParams()}"
+	httpGet(getParams()) { resp -> 
+		if (logEnable) log.debug resp.getData()
+		responseBody = resp.getData()
+		state.geiger = new JsonSlurper().parseText(responseBody)
 	}
-	if (logEnable) log.info resp.body
+		//responseBody = resp.getData()}
+} catch(Exception e) {
+	log.debug "error occured calling httpget ${e}"
+}
+if (logEnable) log.info responseBody
 }
