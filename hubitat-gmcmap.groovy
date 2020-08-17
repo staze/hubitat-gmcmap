@@ -52,7 +52,7 @@ def poll() {
 			sendEvent(name: "CPM", value: respValues.CPM)
 			sendEvent(name: "ACPM", value: respValues.ACPM)
 			sendEvent(name: "uSv", value: respValues.uSv)
-			log.info respValues.CPM + " CPM " + respValues.ACPM + " ACPM " + respValues.uSv + " uSv"
+			log.info respValues.CPM + " CPM, " + respValues.ACPM + " ACPM, " + respValues.uSv + " uSv"
 		}
 	} catch(Exception e) {
 		log.debug "error occured calling httpget ${e}"
