@@ -16,6 +16,7 @@ preferences {
         input "GeigerID", "text", title: "Geiger ID", required: true
         input "Timezone", "text", title: "Timezone", required: false
         input name: "logEnable", type: "bool", title: "Enable debug logging", defaultValue: true
+	//input name: 'updateMins', type: 'enum', description: "Select the update frequency", title: "${getVersionLabel()}\n\nUpdate frequency (minutes)", displayDuringSetup: true, defaultValue: '5', options: ['1', '2', '3', '5','10','15','30'], required: true
     }
 }
 
@@ -28,6 +29,7 @@ def updated() {
     log.info "updated..."
     log.warn "debug logging is: ${logEnable == true}"
     if (logEnable) runIn(1800, logsOff)
+    unschedule()
 }
 
 def parse(String description) {
@@ -37,9 +39,8 @@ def parse(String description) {
 def getParams() { "http://www.gmcmap.com/historyData-plain.asp?Param_ID=${GeigerID}&timezone=${Timezone}" }
 
 def refresh() {
-def responseBody
-
-try {
+    def responseBody
+    try {
 	if (logEnable) log.debug "Params:  ${getParams()}"
 	httpGet(getParams()) { resp -> 
 		if (logEnable) log.debug resp.getData()
@@ -47,8 +48,8 @@ try {
 		state.geiger = jsonSlurper.parseText(resp.data.toString())
 	}
 		//responseBody = resp.getData()}
-} catch(Exception e) {
+    } catch(Exception e) {
 	log.debug "error occured calling httpget ${e}"
-}
-if (logEnable) log.info responseBody
+    }
+    if (logEnable) log.info responseBody
 }
