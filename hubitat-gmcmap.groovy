@@ -5,7 +5,7 @@ import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
 metadata {
-    definition(name: "gmcmap.com Geiger Counter", namespace: "staze", author: "Ryan Stasel", importUrl: "https://raw.githubusercontent.com/hubitat/HubitatPublic/master/examples/drivers/httpGetSwitch.groovy") {
+    definition(name: "gmcmap.com Geiger Counter", namespace: "staze", author: "Ryan Stasel", importUrl: "https://raw.githubusercontent.com/staze/hubitat-gmcmap/master/hubitat-gmcmap.groovy") {
         capability "Sensor"
 	capability "Refresh"
     }
@@ -44,7 +44,7 @@ try {
 	httpGet(getParams()) { resp -> 
 		if (logEnable) log.debug resp.getData()
 		responseBody = resp.getData()
-		state.geiger = new JsonSlurper().parseText(responseBody)
+		state.geiger = jsonSlurper.parseText(resp.data.toString())
 	}
 		//responseBody = resp.getData()}
 } catch(Exception e) {
