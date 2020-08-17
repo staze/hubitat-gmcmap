@@ -29,7 +29,7 @@ def logsOff() {
 
 def updated() {
     unschedule()
-    log.info "updated..."
+    log.info "gmcmap updated..."
     log.warn "debug logging is: ${logEnable == true}"
     if (logEnable) runIn(1800, logsOff)
     if(updateMins != "0") {
@@ -43,7 +43,7 @@ def parse(String description) {
 }
 
 def poll() {
-    if (logEnable) log.debug "polling..."
+    if (logEnable) log.debug "gmcmap polling..."
     def url = "http://www.gmcmap.com/historyData-plain.asp?Param_ID=${GeigerID}&timezone=${Timezone}"
     try {
         httpGet(url) { resp -> 
@@ -52,6 +52,7 @@ def poll() {
             sendEvent(name: "CPM", value: respValues.CPM)
             sendEvent(name: "ACPM", value: respValues.ACPM)
             sendEvent(name: "uSv", value: respValues.uSv)
+	    log.info "respValues.CPM CPM, respValues.ACPM ACPM, respValues.uSv uSv"
 	}
     } catch(Exception e) {
     	log.debug "error occured calling httpget ${e}"
