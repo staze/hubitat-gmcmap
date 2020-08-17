@@ -6,7 +6,7 @@ import groovy.json.JsonSlurper
 metadata {
     definition(name: "gmcmap.com Geiger Counter", namespace: "staze", author: "Ryan Stasel", importUrl: "https://raw.githubusercontent.com/staze/hubitat-gmcmap/master/hubitat-gmcmap.groovy") {
         capability "Sensor"
-	capability "Polling"
+        capability "Polling"
         attribute "CPM", "NUMBER"
         attribute "ACPM", "NUMBER"
         attribute "uSv", "NUMBER"
@@ -17,7 +17,7 @@ preferences {
     section("URIs") {
         input "GeigerID", "text", title: "Geiger ID", required: true
         input "Timezone", "text", title: "Timezone", required: false
-	input name: 'updateMins', type: 'enum', description: "Select the update frequency", title: "Update frequency (minutes)\n0 is disabled", defaultValue: '5', options: ['0', '1', '2', '5','10','15','30'], required: true
+        input name: 'updateMins', type: 'enum', description: "Select the update frequency", title: "Update frequency (minutes)\n0 is disabled", defaultValue: '5', options: ['0', '1', '2', '5','10','15','30'], required: true
         input name: "logEnable", type: "bool", title: "Enable debug logging", defaultValue: true
     }
 }
